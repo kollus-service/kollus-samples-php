@@ -60,6 +60,6 @@ switch($kind) {
         break;
 }
 
-header('Content-Type', 'text/plain; charset=utf-8');
-header('X-Kollus-UserKey', $customKey);
+header('Content-Type:text/plain; charset=utf-8');
+header('X-Kollus-UserKey:' . $customKey);
 echo jwt_encode($result, $securityKey);
