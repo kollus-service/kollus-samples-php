@@ -68,6 +68,6 @@ $webTokenURL = 'http://v.kr.kollus.com/s?jwt=' . $jwtToken . '&custom_key=' . $c
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 </head>
 <body>
-    <iframe src="<?php echo $webTokenURL; ?>" allowfullscreen></iframe>
+    <iframe src="<?php echo $webTokenURL; ?>" allowfullscreen webkitallowfullscreen mozallowfullscreen></iframe>
 </body>
 </html>
