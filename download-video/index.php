@@ -28,11 +28,13 @@ function jwt_encode($payload, $key) {
 $securityKey = 'SECURITY_KEY';
 $customKey = 'CUSTOME_KEY';
 $mediaContentKey = 'MEDIA_CONTENT_KEY';
+$profileKey = 'PROFILE_KEY';
 $clientUserId = 'CLIENT_USER_ID';
 $expireTime = 7200; // 120 min
 $mediaItems = array(
     array(
         'media_content_key' => $mediaContentKey,
+        'mcpf' => $profileKey,
     ),
 //    array(
 //        'media_content_key' => $otherMediaContentKey,
@@ -59,8 +61,9 @@ foreach ($mediaItems as $mediaItem) {
 }
 
 $jwtToken = jwt_encode($payload, $securityKey);
-
+$filename = 'sample.mp4';
 $webTokenURL = 'http://v.kr.kollus.com/s?jwt=' . $jwtToken . '&custom_key=' . $customKey . '&download&force_exclusive_player';
+$srLink = 'http://v.kr.kollus.com/s?jwt=' . $jwtToken . '&custom_key=' . $customKey . 'filename=' .$filename;
 ?>
 <!DOCTYPE html>
 <html lang="en">
