@@ -63,7 +63,7 @@ foreach ($mediaItems as $mediaItem) {
 $jwtToken = jwt_encode($payload, $securityKey);
 $filename = 'sample.mp4';
 $webTokenURL = 'http://v.kr.kollus.com/s?jwt=' . $jwtToken . '&custom_key=' . $customKey . '&download&force_exclusive_player';
-$srLink = 'http://v.kr.kollus.com/s?jwt=' . $jwtToken . '&custom_key=' . $customKey . 'filename=' .$filename;
+$srLink = 'http://v.kr.kollus.com/s?jwt=' . $jwtToken . '&custom_key=' . $customKey . 'filename=' .$filename; // download link
 ?>
 <!DOCTYPE html>
 <html lang="en">
