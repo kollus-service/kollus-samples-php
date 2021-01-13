@@ -76,7 +76,7 @@ $webTokenURL = 'http://v.kr.kollus.com/s?jwt=' . $jwtToken . '&custom_key=' . $c
 	    * @return	void
 	    */
 	    function call_player(method, jwt, custom_key) {
-	    	var scheme_param = method + '?url=http://v.kr.kollus.com/si?jwt=' + jwt+'&custom_key='+custom_key;
+	    	var scheme_param = method + '?url='+encodeURIComponent('http://v.kr.kollus.com/si?jwt=' + jwt+'&custom_key='+custom_key);
 	        kollus_custom_scheme_call(scheme_param);
 		}
 		
