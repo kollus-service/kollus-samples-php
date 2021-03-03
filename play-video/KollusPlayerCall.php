@@ -122,7 +122,7 @@ $webTokenURL = 'http://v.kr.kollus.com/s?jwt=' . $jwtToken . '&custom_key=' . $c
 				loader.exec({
 					ios: {
 						scheme: 'kollus://' + scheme_param,
-						url: "https://itunes.apple.com/app/id760006888"
+						url: "https://itunes.apple.com/app/id760006888" //앱스토어 주소
 					},
 					android: {
 						intentURI: 'kollus://' + scheme_param
@@ -138,10 +138,10 @@ $webTokenURL = 'http://v.kr.kollus.com/s?jwt=' . $jwtToken . '&custom_key=' . $c
 						},
 					notFoundCallback: function() {
 						if (osName === 'iOS') {
-							window.location.href = 'https://itunes.apple.com/app/id760006888';
+							window.location.href = 'https://itunes.apple.com/app/id760006888'; //앱스토어 주소
 						}
 						else if(osName =='Android'){
-							window.location.href = 'market://details?id=com.kollus.media';
+							window.location.href = 'market://details?id=com.kollus.media'; //안드로이드 패키지명
 						}
 					}
 				});
