@@ -116,35 +116,65 @@ $webTokenURL = 'http://v.kr.kollus.com/s?jwt=' . $jwtToken . '&custom_key=' . $c
 	    }
 	    
 	    function kollus_custom_scheme_call(scheme_param) {
-			var AppLoader = tui.AppLoader;
-			var loader = new AppLoader();
-			var osName = new UAParser().getResult().os.name;
-				loader.exec({
-					ios: {
-						scheme: 'kollus://' + scheme_param,
-						url: "https://itunes.apple.com/app/id760006888" //앱스토어 주소
-					},
-					android: {
-						intentURI: 'kollus://' + scheme_param
-					},
-					timerSet: {
-						ios: 4000,
-						android: 4000
-					},
-					etcCallback: function() {
-						if (osName !== 'iOS' && osName !== 'Android') {
-								alert('모바일 단말에서 실행하셔야 합니다.');
-							}
-						},
-					notFoundCallback: function() {
-						if (osName === 'iOS') {
-							window.location.href = 'https://itunes.apple.com/app/id760006888'; //앱스토어 주소
+			var agent = navigator.userAgent.toLowerCase();
+			var device = ( agent.indexOf("iphone") > -1 || agent.indexOf("ipad") > -1 || agent.indexOf("ipod") > -1 )? 'ios' : 'android'
+
+			var schemageneral = 'kollus://' + scheme_param;
+			var schemaintent = 'intent://' + scheme_param + '#Intent;package=com.kollus.media;scheme=kollus;end';
+
+			var	useragent_lowercase = navigator.userAgent.toLocaleLowerCase(),
+				chrome25, kitkat_webview;
+
+			var $iframe = $('<iframe />').hide();
+			var clicked_at = +new Date();
+			$('body').append($iframe);
+			
+			setTimeout(function() {
+				if(device == 'ios') {
+					// 플레이어 미설치시 앱스토어로 리다이렉션
+					setTimeout(function() {
+						if(+new Date - clicked_at < 2000) {
+							goto_app_installation(device);
 						}
-						else if(osName =='Android'){
-							window.location.href = 'market://details?id=com.kollus.media'; //안드로이드 패키지명
-						}
+					}, 1500);
+
+					// ios 9.0의 safari 체크
+					// ios 9.0의 safari는 iframe의 schema link를 감지하지 못함
+					// 따라서 ios 9.0 이하의  사파리 버전 (600.1.4 이하) 과 9.0 이상의 사파리 버전 (601.1) 을 구분하여
+					// 이하는 기존 방식대로 앱을 호출하고
+					// 이상은 직접 location.href 값을 변경하여 앱을 호출하도록 한다.
+					var safari_version = parseFloat(useragent_lowercase.substr(useragent_lowercase.lastIndexOf('safari/') + 7, 7));
+					if(safari_version >= 601.1) {
+						window.top.location.href = schemageneral;
+					} else {
+						$iframe.src = schemageneral
 					}
-				});
+				} else {
+					chrome25 = useragent_lowercase.search('chrome') > -1 && navigator.appVersion.match(/Chrome\/\d+.\d+/)[0].split('/')[1] > 25;
+					kitkat_webview = useragent_lowercase.indexOf('naver') != -1 || useragent_lowercase.indexOf('daum') != -1;
+
+					// chrome25 버전 이하는 iframe의 src에 general schema link를 주입하고
+					// 이상 버전은 intent 링크를 사용
+					// 이때 kitkat webview에서는 chrome25 이하 버전과 동일하게 동작함
+					if(chrome25 && !kitkat_webview) {
+						window.top.location.href = schemaintent;
+					} else {
+						// 플레이어 미설치시 앱스토어로 자동으로 리다이렉션
+						setTimeout(function() {
+							if(+new Date - clicked_at < 2000) {
+								goto_app_installation(device);
+							}
+						}, 1500);
+
+						$iframe.src = schemageneral
+					}
+				}
+			}, 1);
+		}
+		function goto_app_installation(device) {
+			window.top.location.href = device === 'ios' ?
+					'https://itunes.apple.com/us/app/kollusplayer/id760006888?l=ko&ls=1&mt=8' :
+					'market://details?id=com.kollus.media';
 		}
 	</script>
 </head>
