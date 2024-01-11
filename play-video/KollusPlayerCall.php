@@ -151,7 +151,7 @@ $webTokenURL = 'http://v.kr.kollus.com/s?jwt=' . $jwtToken . '&custom_key=' . $c
 					}
 				} else {
 					chrome25 = useragent_lowercase.search('chrome') > -1 && navigator.appVersion.match(/Chrome\/\d+.\d+/)[0].split('/')[1] > 25;
-					kitkat_webview = useragent_lowercase.indexOf('naver') != -1 || useragent_lowercase.indexOf('daum') != -1;
+					kitkat_webview = useragent_lowercase.indexOf('daum') != -1;
 
 					// chrome25 버전 이하는 iframe의 src에 general schema link를 주입하고
 					// 이상 버전은 intent 링크를 사용
