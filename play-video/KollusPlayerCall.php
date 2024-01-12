@@ -115,6 +115,19 @@ $webTokenURL = 'http://v.kr.kollus.com/s?jwt=' . $jwtToken . '&custom_key=' . $c
 	        kollus_custom_scheme_call(scheme_param);
 	    }
 	    
+		function isExisty(param) {
+			return !(param === null || param === undefined)
+		}
+		function checkPageVisible() {
+			if (isExisty(document.hidden)) {
+				return !document.hidden;
+			}
+			if (isExisty(document.webkitHidden)) {
+				return !document.webkitHidden;
+			}
+
+			return true;
+		}
 	    function kollus_custom_scheme_call(scheme_param) {
 			var agent = navigator.userAgent.toLowerCase();
 			var device = ( agent.indexOf("iphone") > -1 || agent.indexOf("ipad") > -1 || agent.indexOf("ipod") > -1 )? 'ios' : 'android'
@@ -132,11 +145,17 @@ $webTokenURL = 'http://v.kr.kollus.com/s?jwt=' . $jwtToken . '&custom_key=' . $c
 			setTimeout(function() {
 				if(device == 'ios') {
 					// 플레이어 미설치시 앱스토어로 리다이렉션
-					setTimeout(function() {
-						if(+new Date - clicked_at < 2000) {
+					var timer = setTimeout(function (){
+						if(checkPageVisible() && +new Date - clicked_at < 4000) {
 							goto_app_installation(device);
 						}
-					}, 1500);
+					}, 3000);
+					window.addEventListener("visibilitychange", () => {
+						if (checkPageVisible()) {
+							clearTimeout(timer);
+							document.removeEventListener('visibilitychange', clear);
+						}
+					});
 
 					// ios 9.0의 safari 체크
 					// ios 9.0의 safari는 iframe의 schema link를 감지하지 못함
