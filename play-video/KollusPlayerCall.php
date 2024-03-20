@@ -64,6 +64,19 @@ $webTokenURL = 'http://v.kr.kollus.com/s?jwt=' . $jwtToken . '&custom_key=' . $c
 	<script src="https://cdn.jsdelivr.net/npm/ua-parser-js@0/dist/ua-parser.min.js"></script>
 	<script src="https://uicdn.toast.com/tui-app-loader/latest/tui-app-loader.js"></script>
 	<script type="text/javascript">
+		function is_mobile() {
+			let agent = window.navigator.userAgent
+			const mobileRegex = [
+				/Android/i,
+				/iPhone/i,
+				/iPad/i,
+				/iPod/i,
+				/BlackBerry/i,
+				/Windows Phone/i
+			]
+
+			return mobileRegex.some(mobile => agent.match(mobile)) || new RegExp('(Linux)', "i").test(navigator.userAgent) && navigator.maxTouchPoints > 0
+		}
 	    /**
 	    * kollus Player 모바일 전용플레이어 호출
 	    *
@@ -77,6 +90,11 @@ $webTokenURL = 'http://v.kr.kollus.com/s?jwt=' . $jwtToken . '&custom_key=' . $c
 	    */
 	    function call_player(method, jwt, custom_key) {
 	    	var scheme_param = method + '?url='+encodeURIComponent('http://v.kr.kollus.com/si?jwt=' + jwt+'&custom_key='+custom_key);
+
+			if (!is_mobile()) {
+				alert('모바일로 실행해주세요.')
+				return false;
+			}
 	        kollus_custom_scheme_call(scheme_param);
 		}
 		
@@ -112,6 +130,11 @@ $webTokenURL = 'http://v.kr.kollus.com/s?jwt=' . $jwtToken . '&custom_key=' . $c
 	        }
 	        
 	        var scheme_param = 'download' + url_list;
+
+			if (!is_mobile()) {
+				alert('모바일로 실행해주세요.')
+				return false;
+			}
 	        kollus_custom_scheme_call(scheme_param);
 	    }
 	    
