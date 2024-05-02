@@ -61,7 +61,7 @@ $webTokenURL = 'http://v.kr.kollus.com/s?jwt=' . $jwtToken . '&custom_key=' . $c
 	<script src="http://code.jquery.com/jquery-latest.min.js"></script>
 
 	<script src="https://uicdn.toast.com/tui.code-snippet/latest/tui-code-snippet.js"></script>
-	<script src="https://cdn.jsdelivr.net/npm/ua-parser-js@0/dist/ua-parser.min.js"></script>
+	<script src="https://file.kollus.com/public/sample/ua-parser.min.js"></script>
 	<script src="https://uicdn.toast.com/tui-app-loader/latest/tui-app-loader.js"></script>
 	<script type="text/javascript">
 		function is_mobile() {
