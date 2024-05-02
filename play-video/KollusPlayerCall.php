@@ -58,11 +58,11 @@ $webTokenURL = 'http://v.kr.kollus.com/s?jwt=' . $jwtToken . '&custom_key=' . $c
 <head>
     <title></title>
     <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0,maximum-scale=1.0" />
-	<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+	<script src="https://code.jquery.com/jquery-latest.min.js"></script>
 
-	<script src="https://uicdn.toast.com/tui.code-snippet/latest/tui-code-snippet.js"></script>
-	<script src="https://file.kollus.com/public/sample/ua-parser.min.js"></script>
-	<script src="https://uicdn.toast.com/tui-app-loader/latest/tui-app-loader.js"></script>
+	<!-- <script src="https://uicdn.toast.com/tui.code-snippet/latest/tui-code-snippet.js"></script> -->
+	<!-- <script src="https://file.kollus.com/public/sample/ua-parser.min.js"></script> -->
+	<!-- <script src="https://uicdn.toast.com/tui-app-loader/latest/tui-app-loader.js"></script> -->
 	<script type="text/javascript">
 		function is_mobile() {
 			let agent = window.navigator.userAgent
