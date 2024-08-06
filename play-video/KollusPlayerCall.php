@@ -167,7 +167,8 @@ $webTokenURL = 'http://v.kr.kollus.com/s?jwt=' . $jwtToken . '&custom_key=' . $c
 			
 			setTimeout(function() {
 				if(device == 'ios') {
-					// 플레이어 미설치시 앱스토어로 리다이렉션
+					// 플레이어 미설치시 앱스토어로 리다이렉션, 클릭 이후 4초간 무응답 시 스토어로 이동됩니다.
+					// 단말의 성능 혹은 부하로 4초 이상의 무응답 시에도 스토어로 이동되므로 서비스 사이트에 맞는 적절한 값으로 수정하길 권장 드립니다.
 					var timer = setTimeout(function (){
 						if(checkPageVisible() && +new Date - clicked_at < 4000) {
 							goto_app_installation(device);
@@ -201,7 +202,8 @@ $webTokenURL = 'http://v.kr.kollus.com/s?jwt=' . $jwtToken . '&custom_key=' . $c
 					if(chrome25 && !kitkat_webview) {
 						window.top.location.href = schemaintent;
 					} else {
-						// 플레이어 미설치시 앱스토어로 자동으로 리다이렉션
+						// 플레이어 미설치시 앱스토어로 리다이렉션, 클릭 이후 4초간 무응답 시 스토어로 이동됩니다.
+					        // 단말의 성능 혹은 부하로 4초 이상의 무응답 시에도 스토어로 이동되므로 서비스 사이트에 맞는 적절한 값으로 수정하길 권장 드립니다.
 						setTimeout(function() {
 							if(+new Date - clicked_at < 2000) {
 								goto_app_installation(device);
