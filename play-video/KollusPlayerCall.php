@@ -65,7 +65,8 @@ $webTokenURL = 'http://v.kr.kollus.com/s?jwt=' . $jwtToken . '&custom_key=' . $c
 	<!-- <script src="https://uicdn.toast.com/tui-app-loader/latest/tui-app-loader.js"></script> -->
 	<script type="text/javascript">
 		function is_mobile() {
-			let agent = window.navigator.userAgent
+			const agent = window.navigator.userAgent;
+			// 모바일 기기 식별을 위한 정규식 패턴 배열
 			const mobileRegex = [
 				/Android/i,
 				/iPhone/i,
@@ -73,9 +74,19 @@ $webTokenURL = 'http://v.kr.kollus.com/s?jwt=' . $jwtToken . '&custom_key=' . $c
 				/iPod/i,
 				/BlackBerry/i,
 				/Windows Phone/i
-			]
+			];
 
-			return mobileRegex.some(mobile => agent.match(mobile)) || new RegExp('(Linux)', "i").test(navigator.userAgent) && navigator.maxTouchPoints > 0
+			// safari 데스크탑 모드 설정이 되어 있으면 iPad가 "Macintosh"로 표시 됨
+			const isTouchDevice = navigator.maxTouchPoints > 0;
+
+			// Linux 기반의 터치스크린 장치 (주로 Android 태블릿이나 스마트폰)
+			const isLinuxTouchDevice = /Linux/i.test(agent) && isTouchDevice;
+
+			// iPad 또는 터치스크린이 있는 Macintosh (iOS 13 이상)
+			const isMacTouchDevice = agent.includes('Macintosh') && isTouchDevice;
+
+			// 모바일 기기 또는 태블릿 기기인 경우 true 반환
+			return mobileRegex.some(mobile => mobile.test(agent)) || isLinuxTouchDevice || isMacTouchDevice;
 		}
 	    /**
 	    * kollus Player 모바일 전용플레이어 호출
@@ -152,8 +163,9 @@ $webTokenURL = 'http://v.kr.kollus.com/s?jwt=' . $jwtToken . '&custom_key=' . $c
 			return true;
 		}
 	    function kollus_custom_scheme_call(scheme_param) {
-			var agent = navigator.userAgent.toLowerCase();
-			var device = ( agent.indexOf("iphone") > -1 || agent.indexOf("ipad") > -1 || agent.indexOf("ipod") > -1 )? 'ios' : 'android'
+			const agent = navigator.userAgent.toLowerCase();  // User-Agent 소문자로 변환하여 비교
+			const isIOS = agent.includes("iphone") || agent.includes("ipad") || agent.includes("ipod") || (agent.includes('macintosh') && navigator.maxTouchPoints > 0);
+			const device = isIOS ? 'ios' : 'android';
 
 			var schemageneral = 'kollus://' + scheme_param;
 			var schemaintent = 'intent://' + scheme_param + '#Intent;package=com.kollus.media;scheme=kollus;end';
